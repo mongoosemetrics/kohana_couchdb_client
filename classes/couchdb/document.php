@@ -39,7 +39,12 @@ class CouchDB_Document {
 	/**
 	 * @var  object  holds all of the document data
 	 */
-	protected $_data;
+    protected $_data;
+
+	/**
+	 * @var  object  delete  document
+	 */
+	protected $delete;
 
 	/**
 	 * Manages a single document
@@ -107,6 +112,22 @@ class CouchDB_Document {
 
 		// Set the value that was passed in
 		$this->_data->$name = $value;
+	}
+
+	/**
+	 * Deletes a single named member of this document
+	 *
+	 * @param   string  the name of the member we are deleting
+	 * @return  object  a reference to this class instance
+	 */
+	public function delete($id, $rev)
+	{
+        // Delete
+       return  $this->_couchdb->delete_document($id,
+           (object) array('rev' => $rev)
+       );
+
+       // return $this;
 	}
 
     /**
@@ -195,7 +216,10 @@ class CouchDB_Document {
 		{
 			// Save the changes that were made to this document
 			$this->_couchdb->$id = $this->_data;
-		}
+        }
+
+        return $this;
+
 	}
 
 }
