@@ -114,6 +114,16 @@ class CouchDB_Document {
 		$this->_data->$name = $value;
 	}
 
+    /**
+     * Returns the data object
+     * 
+     * @return  object  data object
+     */
+    public function export()
+    {
+        return json_decode(json_encode($this->_data));
+    }
+
 	/**
 	 * Deletes a single named member of this document
 	 *
